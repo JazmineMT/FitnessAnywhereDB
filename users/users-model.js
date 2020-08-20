@@ -10,14 +10,15 @@ module.exports = {
   findClasses,
   updateClass,
   deleteClass,
-  findClassesById
+  findClassesById,
+  deleteUser
 };
 
 
 function findUsers(){
     return db('users as u')
     .join('userTypes as t', 'u.authCode', 't.authCodeForUser')
-    .select( 'u.name', 't.type_name', 'u.username', 'u.email')
+    .select( 'u.name', 't.type_name', 'u.username', 'u.email', 'u.id')
   
 }
 function findClasses(){
@@ -69,6 +70,11 @@ function updateClass(changes , id){
 
 function deleteClass(id){
     return db('classes')
+    .where({id})
+    .del()
+}
+function deleteUser(id){
+    return db('user')
     .where({id})
     .del()
 }

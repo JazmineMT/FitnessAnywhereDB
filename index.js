@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 5400;
 
 
 server.get('/', (req, res) =>{
-    res.send({api : "up"})
+    res.status(200).json({api : "up"})
 })
 
 
