@@ -7,7 +7,10 @@ module.exports = {
   findUsersById,
   addClass,
   findUsersBy,
-  findClasses
+  findClasses,
+  updateClass,
+  deleteClass,
+  findClassesById
 };
 
 
@@ -18,7 +21,10 @@ function findUsers(){
   
 }
 function findClasses(){
-    return db('classes').orderBy('classDate')
+    return db('classes as c')
+    .join('intensityLevels as i', 'c.intensityLevel', 'i.id')
+    .select('c.name', 'c.type', 'c.startTime', 'c.classDate', 'c.duration', 'c.location', 'c.currentRegistered', 'c.maxClassSize', 'i.level_name', 'c.id')
+    .orderBy('classDate')
 }
 
 function findClassesBy(filter){
@@ -32,6 +38,11 @@ function findUsersById(id){
     return db('users').where({id}).first();
 }
 
+function findClassesById(id){
+    return db('classes').where({id}).first();
+}
+
+
 async function addUser(user){
     try{
         const [id] = await db('users').insert(user, "id")
@@ -44,8 +55,20 @@ async function addUser(user){
 async function addClass(newclass){
     try{
         const [id] = await db('classes').insert(newclass, "id")
-        return findById(id)
+        return findClassesById(id)
     } catch(error){
         throw error;
     }
+}
+
+function updateClass(changes , id){
+    return db('classes')
+    .where({id})
+    .update(changes)
+}
+
+function deleteClass(id){
+    return db('classes')
+    .where({id})
+    .del()
 }

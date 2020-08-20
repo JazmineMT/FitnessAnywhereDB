@@ -9,7 +9,7 @@ exports.up = function(knex) {
     })
     .createTable('intensityLevels', tbl => {
         tbl.increments();
-        tbl.string('name', 128).notNullable().unique();
+        tbl.string('level_name', 128).notNullable().unique();
     })
     .createTable('users', tbl =>{
         tbl.increments();

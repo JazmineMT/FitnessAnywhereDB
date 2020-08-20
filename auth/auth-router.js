@@ -65,7 +65,7 @@ function signToken(account){
 const payload = {
     subject: account.id,
     username: account.username,
-    department: account.department
+    authCode: account.authCode
 }
 
 const secret = secrets.jwtSecret

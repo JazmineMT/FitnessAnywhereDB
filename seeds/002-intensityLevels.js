@@ -5,9 +5,9 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('intensityLevels').insert([
-        {name: 'Beginner'},
-        {name: 'Intermediate'},
-        {name: 'Advanced'},
+        {level_name: 'Beginner'},
+        {level_name: 'Intermediate'},
+        {level_name: 'Advanced'},
         
       ]);
     });
