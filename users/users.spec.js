@@ -22,15 +22,7 @@ describe('server', () => {
         // });
 
        
-        // it("should save token", async () => {
-        //     await request(server).post('/api/auth/login')
-        //     .send({
-        //         username: "TerrannceManly", password : "password",
-        //     })
-        //     .end( function (err ,res){
-        //         token = res.body.token
-        //     })
-        // })
+    
 
         it("should return 200 OK", () => {
             return request(server)

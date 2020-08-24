@@ -1,3 +1,5 @@
+// update user info 
+// add instructor to class 
 
 exports.up = function(knex) {
     return knex.schema 
@@ -38,6 +40,7 @@ exports.up = function(knex) {
         .references('users.userType')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
+        
 
     })
     .createTable('clients', tbl => {
@@ -72,6 +75,8 @@ exports.up = function(knex) {
         tbl.string('location', 128).notNullable()
         tbl.decimal('currentRegistered', 128).notNullable()
         tbl.decimal('maxClassSize', 120).notNullable()
+        tbl.string('Instructor', 128).notNullable()
+        tbl.string('Gender', 128).notNullable()
 
     })
     .createTable('savedClasses', tbl => {

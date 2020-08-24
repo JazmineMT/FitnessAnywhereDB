@@ -3,21 +3,61 @@ const Users = require('./users-model')
 const restricted = require('../auth/restricted-middleware')
 const userRestricted = require('../auth/user-type-restricted-middleware')
 
-router.get('/users',(req,res)=>{
+
+// GET all users 
+
+router.get('/users',  restricted, userRestricted, (req,res)=>{
     Users.findUsers()
     .then(users => {
         res.status(200).json({data: users})
     })
+    .catch( err =>{
+        res.status(500).json({message: err.message})
+    })
 })
 
-router.get('/classes' ,(req,res)=>{
+
+// GET all clases
+
+router.get('/classes',restricted,(req,res)=>{
     Users.findClasses()
     .then(classes => {
         res.status(200).json({data: classes})
     })
+    .catch( err =>{
+        res.status(500).json({message: err.message})
+    })
 })
 
-router.post('/classes', (req, res)=>{
+// get class by id 
+router.get('/classes/:id', restricted,(req,res)=>{
+    const {id }= req.params
+    Users.findClassesById(id)
+    .then(classe => {
+        res.status(200).json({data: classes})
+    })
+    .catch( err =>{
+        res.status(500).json({message: err.message})
+    })
+})
+
+// get class by a particular filter
+router.get('/classes/search', restricted,(req,res)=>{
+    const filter = req.body
+    Users.findClassesBy(filter)
+    .then(classes => {
+        res.status(200).json({data: classes})
+    })
+    .catch( err =>{
+        res.status(500).json({message: err.message})
+    })
+})
+
+
+
+// Create a new class 
+
+router.post('/classes',  restricted, userRestricted,  (req, res)=>{
     const newclass = req.body
     Users.addClass(newclass)
     .then( added => {
@@ -28,7 +68,9 @@ router.post('/classes', (req, res)=>{
     })
 })
 
-router.put('/classes/:id',(req,res) =>{
+// update class by id 
+
+router.put('/classes/:id', restricted, userRestricted, (req,res) =>{
     const changes = req.body
     const {id }= req.params
     Users.findClassesById(id)
@@ -49,6 +91,8 @@ router.put('/classes/:id',(req,res) =>{
 
 })
 
+// delete a class by id 
+
 router.delete('/classes/:id', restricted, userRestricted, (req, res)=>{
     const {id }= req.params
     Users.deleteClass(id)
@@ -63,6 +107,9 @@ router.delete('/classes/:id', restricted, userRestricted, (req, res)=>{
         res.status(500).json({message: err.message})
     })
 })
+
+// delete user by id 
+
 router.delete('/users/:id', restricted, userRestricted, (req, res)=>{
     const {id }= req.params
     Users.deleteUser(id)

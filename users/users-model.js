@@ -24,7 +24,7 @@ function findUsers(){
 function findClasses(){
     return db('classes as c')
     .join('intensityLevels as i', 'c.intensityLevel', 'i.id')
-    .select('c.name', 'c.type', 'c.startTime', 'c.classDate', 'c.duration', 'c.location', 'c.currentRegistered', 'c.maxClassSize', 'i.level_name', 'c.id')
+    .select('c.name', 'c.type', 'c.startTime', 'c.classDate', 'c.duration', 'c.location', 'c.currentRegistered', 'c.maxClassSize', 'i.level_name', 'c.id', 'c.gender', 'c.instructor')
     .orderBy('classDate')
 }
 
